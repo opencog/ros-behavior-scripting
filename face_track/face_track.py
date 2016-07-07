@@ -253,6 +253,10 @@ class FaceTrack:
 
 		logger.info("Lost face; visibile faces now: " + str(self.visible_faces))
 
+	# Update face location in octomap if it is in visible faces list
+	def update_face_loc(self,face):
+		if face.id in self.visible_faces:
+			self.atomo.update_face_octomap(face.id,face.point.x,face.point.y,face.point.z)
 	# ----------------------------------------------------------
 	# Main look-at action driver.  Should be called at least a few times
 	# per second.  This publishes all of the eye-related actions that the
@@ -379,7 +383,8 @@ class FaceTrack:
 		if not self.control_mode & self.C_FACE_TRACKING:
 			return
 		#below causes error in cmt .. mandeep
-		#for face in data.faces:
+		for face in data.faces:
+                        self.update_face_loc(face)
 			#fid = face.id
 			#loc = face.point
 			## Sanity check.  Sometimes pi_vision sends us faces with
