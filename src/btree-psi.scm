@@ -35,6 +35,7 @@
 
 ; Load the behavior trees.
 (use-modules (opencog exec))        ; needed for cog-evaluate! in put_atoms.py
+;(use-modules (opencog ato pointmem)); needed for maps
 (use-modules (opencog eva-model))   ; needed for defines in put_atoms.py
 (use-modules (opencog eva-behavior))
 (use-modules (opencog openpsi))
@@ -42,12 +43,14 @@
 ; Load the Eva personality configuration.
 ; (display %load-path)
 (add-to-load-path "../src")
+;;initialize octomap with 15hz, 10 second or 150 frames buffer ; 1 cm spatial resolution
+;;(create-map "faces" 0.01 (/ 1000 15) 150) (step-time-unit "faces")(auto-step-time-on "faces")
+
 ; (load-from-path "cfg-eva.scm") ;;; <<<=== See, its Eva here!
 (load-from-path "cfg-sophia.scm") ;;; <<<=== See, its Sophia here!
-
+(load-from-path "time-map.scm") ;;; octomap for faces
 ;; Load the actual psi rules.
 (load-from-path "psi-behavior.scm")
-
 ;; Call (run) to run the main loop, (halt) to pause the loop.
 ;; The main loop runs in its own thread.
 (define (run) (psi-run))
