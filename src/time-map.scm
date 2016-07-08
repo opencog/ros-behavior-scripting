@@ -7,7 +7,7 @@
 (define (look-at-face face-id-node)
 		(let* ((loc-atom (get-past-locs-ato "faces" face-id-node (div 1000 15)))
 			(fnc "evl.look_at_point("))
-			(if (equal? (cog-atom (cog-undefined-handle)) loc-atom) #f 
+			(if (equal? (cog-atom (cog-undefined-handle)) loc-atom) (stv 0 0) 
 				(let* ((loc-link (car (cog-outgoing-set loc-atom)))
 					(xx (number->string (loc-link-x loc-link)))
 					(yy (number->string (loc-link-y loc-link)))
@@ -16,5 +16,6 @@
 					
 			)
 		)
+		(stv 1 1)
 )
 
