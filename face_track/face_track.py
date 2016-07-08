@@ -382,15 +382,16 @@ class FaceTrack:
 	def face_loc_cb(self, data):
 		if not self.control_mode & self.C_FACE_TRACKING:
 			return
-		#below causes error in cmt .. mandeep
+		
 		for face in data.faces:
-                        self.update_face_loc(face)
+			self.update_face_loc(face)			
 			#fid = face.id
 			#loc = face.point
 			## Sanity check.  Sometimes pi_vision sends us faces with
 			## location (0,0,0). Discard these.
 			#if loc.x < 0.05:
 				#continue
+			#below causes error in cmt
 			#self.add_face(fid)
 		#above causes error in cmt
 		# Now perform all the various looking-at actions
