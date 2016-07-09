@@ -37,6 +37,7 @@ from chatbot.msg import ChatMessage
 from pi_face_tracker.msg import FaceEvent, Faces
 from opencog.scheme_wrapper import scheme_eval, scheme_eval_h, scheme_eval_as
 import threading
+from opencog.atomspace import AtomSpace, TruthValue
 # Not everything has this message; don't break if it's missing.
 # i.e. create a stub if its not defined.
 #try:
@@ -416,10 +417,10 @@ class EvaControl():
 			#scheme_eval(self.atomspace,fac)
 
 	def thr(self):
-		self.atomspace = scheme_eval_as('(cog-atomspace)')
+		self.atomspace = AtomSpace()#scheme_eval_as('(cog-atomspace)')
 		lpth="/home/mandeep/hr/opencog/ros-behavior-scripting/src/time-map.scm"
 		scheme_eval(self.atomspace, "(load \""+lpth+"\")")
-		print scheme_eval(self.atomspace,"(+ 2 3)")
+		#print scheme_eval(self.atomspace,"(+ 2 3)")
 		#scheme_eval(self.atomspace, "(map-ato \"faces\" (NumberNode \"2.0\") 1 2 3)")
 		rate=rospy.Rate(30)
 		while not rospy.is_shutdown():
@@ -427,14 +428,14 @@ class EvaControl():
 			self.lock.acquire()
 			try:
 				if len(self.sc_str_set)>0:
-					print "faces: ", len(self.face_array)
+					#print "faces: ", len(self.face_array)
 					for face in self.face_array:
-						print "hello"
+						#print "hello"
 						fac="(map-ato \"faces\" (NumberNode \""+str(face.id)+"\") "+str(face.point.x)+" "+str(face.point.y)+" "+str(face.point.z)+")"
 						scheme_eval(self.atomspace,fac)
 					self.sc_str_set=""
 
-				if False:#len(self.sc_str_get)>0:
+				if len(self.sc_str_get)>0:
 					fid=self.sc_str_get
 					print "******look at face point: ", fid
 					fc="(look-at-face (NumberNode \""+fid+"\"))"
