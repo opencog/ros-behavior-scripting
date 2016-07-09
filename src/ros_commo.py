@@ -191,10 +191,12 @@ class EvaControl():
 		self.turn_pub.publish(trg)
 
 	def look_at_face_point(self, fid):
-		print "!!!!!!!!!! In look at face point"
+		#print "!!!!!!!!!! In look at face point"
+		#time.sleep(0.1)
 		self.lock.acquire()
 		try:
 			self.sc_str_get=str(fid)
+			print "!!!!!!!!!! In look at face point ", fid
 		finally:
 			self.lock.release()
 		#print "******look at face point: ", fid
@@ -405,8 +407,8 @@ class EvaControl():
 		self.lock.acquire()
 		try:
 			if len(self.sc_str_set)<1:
-				self.sc_str_set="do"
 				self.face_array=data.faces
+				self.sc_str_set="do"
 		finally:
 			self.lock.release()
 		#for face in data.faces:
@@ -417,18 +419,22 @@ class EvaControl():
 		self.atomspace = scheme_eval_as('(cog-atomspace)')
 		lpth="/home/mandeep/hr/opencog/ros-behavior-scripting/src/time-map.scm"
 		scheme_eval(self.atomspace, "(load \""+lpth+"\")")
+		print scheme_eval(self.atomspace,"(+ 2 3)")
+		#scheme_eval(self.atomspace, "(map-ato \"faces\" (NumberNode \"2.0\") 1 2 3)")
 		rate=rospy.Rate(30)
 		while not rospy.is_shutdown():
 			rate.sleep()
 			self.lock.acquire()
 			try:
 				if len(self.sc_str_set)>0:
-					for face in data.faces:
+					print "faces: ", len(self.face_array)
+					for face in self.face_array:
+						print "hello"
 						fac="(map-ato \"faces\" (NumberNode \""+str(face.id)+"\") "+str(face.point.x)+" "+str(face.point.y)+" "+str(face.point.z)+")"
 						scheme_eval(self.atomspace,fac)
 					self.sc_str_set=""
 
-				if len(self.sc_str_get)>0:
+				if False:#len(self.sc_str_get)>0:
 					fid=self.sc_str_get
 					print "******look at face point: ", fid
 					fc="(look-at-face (NumberNode \""+fid+"\"))"
@@ -442,6 +448,7 @@ class EvaControl():
 						trg.y = float(pts[1])
 						trg.z = float(pts[2])
 						self.turn_pub.publish(trg)
+						self.gaze_pub.publish(trg)
 					self.sc_str_get=""
 			finally:
 				self.lock.release()
@@ -458,6 +465,7 @@ class EvaControl():
 		self.sc_str_get=""
 		self.face_array=Faces()
 		ttt=threading.Thread(target=self.thr)
+		ttt.start()
 		#self.atomspace = scheme_eval_as('(cog-atomspace)')
 
 		# Needed for the public define of chat-state, chat-start, etc.
@@ -560,7 +568,7 @@ class EvaControl():
 		# Full control by default
 		self.control_mode = 255
 		self.running = True
-		ttt.start()
+		#ttt.start()
 		#ttt.join()
 
 # ----------------------------------------------------------------
