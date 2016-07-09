@@ -194,7 +194,7 @@ class EvaControl():
 		print "******look at face point: ", fid
 		fc="(look-at-face (NumberNode \""+str(fid)+"\"))"
 		ptstr=scheme_eval(self.atomspace,fc)
-		if len(pts)<5:
+		if len(ptstr)<5:
 			print "XX Face Point Invalid XX"
 			return
 		pts=ptstr.split()
@@ -395,9 +395,12 @@ class EvaControl():
 		self.control_mode = data.data
 	
 	def face_loc_cb(self, data):
+		lpth="/home/mandeep/hr/opencog/ros-behavior-scripting/src/time-map.scm"
+		scheme_eval(self.atomspace, "(load \""+lpth+"\")")
+
 		for face in data.faces:
 			fac="(map-ato \"faces\" (NumberNode \""+str(face.id)+"\") "+str(face.point.x)+" "+str(face.point.y)+" "+str(face.point.z)+")"
-			scheme_eval(self.atomspace,fac)
+			#scheme_eval(self.atomspace,fac)
 
 	def __init__(self):
 
