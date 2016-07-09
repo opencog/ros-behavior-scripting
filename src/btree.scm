@@ -31,7 +31,7 @@
 
 ; Start the cogsserver.  It is used by the face-tracker to poke data
 ; into the atomspace.
-;(load "time-map.scm")
+;(load "look.scm")
 ;(use-modules (opencog ato pointmem))
 (use-modules (opencog cogserver))
 (start-cogserver "../scripts/opencog.conf")
