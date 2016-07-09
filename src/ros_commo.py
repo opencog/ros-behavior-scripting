@@ -194,7 +194,7 @@ class EvaControl():
 		print "******look at face point: ", fid
 		fc="(look-at-face (NumberNode \""+str(fid)+"\"))"
 		ptstr=scheme_eval(self.atomspace,fc)
-		if len(pts)<5:
+		if len(ptstr)<5:
 			print "XX Face Point Invalid XX"
 			return
 		pts=ptstr.split()
