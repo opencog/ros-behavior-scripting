@@ -190,7 +190,7 @@ class EvaControl():
 		self.turn_pub.publish(trg)
 
 	def look_at_face_point(self, fid):
-		print "look at face point: ", fid
+		print "******look at face point: ", fid
 		fc="(look-at-face (NumberNode \""+str(fid)+"\"))"
 		ptstr=scheme_eval(self.atomspace,fc)
 		if len(pts)<5:
@@ -198,10 +198,10 @@ class EvaControl():
 			return
 		pts=ptstr.split()
 		trg = Target()
-		trg.x = pts[0]
-		trg.y = pts[1]
-		trg.z = pts[2]
-                self.turn_pub.publish(trg)
+		trg.x = float(pts[0])
+		trg.y = float(pts[1])
+		trg.z = float(pts[2])
+		self.turn_pub.publish(trg)
 
 	# ----------------------------------------------------------
 
