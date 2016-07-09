@@ -27,7 +27,7 @@
 
 (use-modules (opencog))
 (use-modules (opencog query))  ; XXX work-around relex2logic bug
-
+;(load-from-path "time-map.scm") ;;; octomap for faces
 ; Start the cogsserver.  It is used by the face-tracker to poke data
 ; into the atomspace.
 (use-modules (opencog cogserver))
@@ -48,7 +48,7 @@
 
 ; (load-from-path "cfg-eva.scm") ;;; <<<=== See, its Eva here!
 (load-from-path "cfg-sophia.scm") ;;; <<<=== See, its Sophia here!
-(load-from-path "time-map.scm") ;;; octomap for faces
+;(load-from-path "time-map.scm") ;;; octomap for faces
 ;; Load the actual psi rules.
 (load-from-path "psi-behavior.scm")
 ;; Call (run) to run the main loop, (halt) to pause the loop.

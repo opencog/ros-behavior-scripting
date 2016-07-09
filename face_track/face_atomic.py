@@ -32,7 +32,9 @@ class FaceAtomic:
 		self.port = 17020
 	def update_face_octomap(self, faceid, xx, yy, zz):
 		face=self.face_loc_scm(faceid,xx,yy,zz)
-		netcat(self.hostname, self.port, face + "\n")
+		#print face
+		#netcat(self.hostname, self.port, face + "\n")
+		#print "****Updated-face:"+str(faceid)+"-- x:"+str(xx)+" y:"+str(yy)+" z:"+str(zz)+"\n"
 
 	# Add a newly visible face to the atomspace.
 	def add_face_to_atomspace(self, faceid):

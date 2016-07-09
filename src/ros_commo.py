@@ -34,6 +34,8 @@ from blender_api_msgs.msg import SaccadeCycle
 from blender_api_msgs.msg import SomaState
 from chatbot.msg import ChatMessage
 
+from opencog.scheme_wrapper import scheme_eval, scheme_eval_h, scheme_eval_as
+
 # Not everything has this message; don't break if it's missing.
 # i.e. create a stub if its not defined.
 #try:
@@ -186,6 +188,15 @@ class EvaControl():
 		trg.y = y
 		trg.z = z
 		self.turn_pub.publish(trg)
+
+        def look_at_face_point(self, x, y, z):
+                print "look at face point: ", x, y, z
+
+                trg = Target()
+                trg.x = x
+                trg.y = y
+                trg.z = z
+                self.turn_pub.publish(trg)
 
 	# ----------------------------------------------------------
 
@@ -376,6 +387,11 @@ class EvaControl():
 	# Data is a bit-flag that enables/disables publication of messages.
 	def behavior_control_callback(self, data):
 		self.control_mode = data.data
+	
+	def face_loc_cb(self, data):
+		for face in data.faces:
+			fac="(map-to \"faces\" (NumberNode \""+str(face.id)+"\") "+str(face.point.x)+" "+str(face.point.y)+" "str(face.point.z)+")"
+			scheme_eval(self.atomspace,fac)
 
 	def __init__(self):
 
@@ -385,6 +401,19 @@ class EvaControl():
 		rospy.init_node("OpenCog_Eva")
 		print("Starting OpenCog Behavior Node")
 
+                self.atomspace = scheme_eval_as('(cog-atomspace)')
+
+                # Needed for the public define of chat-state, chat-start, etc.
+                # XXX Except that this doesn't actually make chat-state visible?
+                # WTF? But use-modules in btree.scm does work... strange.
+                scheme_eval(self.atomspace, "(use-modules (opencog exec))")
+                scheme_eval(self.atomspace, "(use-modules (opencog eva-model))")
+                scheme_eval(self.atomspace, "load \"time-map.scm\"")
+		#scheme_eval(self.atomspace, "(use-modules (opencog ato pointmem))")
+		#scheme_eval(self.atomspace, "(create-map \"faces\" 0.01 66 150) (step-time-unit \"faces\")(auto-step-time-on \"faces\")")
+
+		self.TOPIC_FACE_LOCATIONS = "/camera/face_locations"
+		rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
 		# ----------------
 		# Get the available animations
 		rospy.Subscriber("/blender_api/available_emotion_states",

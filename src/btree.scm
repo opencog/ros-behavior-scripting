@@ -31,6 +31,8 @@
 
 ; Start the cogsserver.  It is used by the face-tracker to poke data
 ; into the atomspace.
+;(load "time-map.scm")
+;(use-modules (opencog ato pointmem))
 (use-modules (opencog cogserver))
 (start-cogserver "../scripts/opencog.conf")
 
@@ -58,7 +60,7 @@
 ; (display %load-path)
 (add-to-load-path "../src")
 (load-from-path "cfg-sophia.scm") ;;; <<<=== See, its Sophia here!
-(load-from-path "time-map.scm");;; octomap
+;(load-from-path "time-map.scm");;; octomap
 ;; Call (run) to run the main loop, (halt) to pause the loop.
 ;; The main loop runs in its own thread.
 (load-from-path "old-tree.scm")

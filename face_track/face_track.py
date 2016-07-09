@@ -79,7 +79,7 @@ class FaceTrack:
 
 		rospy.init_node("OpenCog_Facetracker")
 		logger.info("Starting OpenCog Face Tracker ROS Node")
-
+		self.skipper=5
 		# The OpenCog API. This is used to send face data to OpenCog.
 		self.atomo = FaceAtomic()
 
@@ -383,8 +383,13 @@ class FaceTrack:
 		if not self.control_mode & self.C_FACE_TRACKING:
 			return
 		
-		for face in data.faces:
-			self.update_face_loc(face)			
+		#for face in data.faces:
+			#self.update_face_loc(face)
+			#if self.skipper>0:
+			#	self.skipper=self.skipper-1
+			#else:
+			#	self.skipper=5
+			#	self.update_face_loc(face)			
 			#fid = face.id
 			#loc = face.point
 			## Sanity check.  Sometimes pi_vision sends us faces with
