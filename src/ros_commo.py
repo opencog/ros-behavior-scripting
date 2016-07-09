@@ -189,13 +189,18 @@ class EvaControl():
 		trg.z = z
 		self.turn_pub.publish(trg)
 
-        def look_at_face_point(self, x, y, z):
-                print "look at face point: ", x, y, z
-
-                trg = Target()
-                trg.x = x
-                trg.y = y
-                trg.z = z
+	def look_at_face_point(self, fid):
+		print "look at face point: ", fid
+		fc="(look-at-face (NumberNode \""+str(fid)+"\"))"
+		ptstr=scheme_eval(self.atomspace,fc)
+		if len(pts)<5:
+			print "XX Face Point Invalid XX"
+			return
+		pts=ptstr.split()
+		trg = Target()
+		trg.x = pts[0]
+		trg.y = pts[1]
+		trg.z = pts[2]
                 self.turn_pub.publish(trg)
 
 	# ----------------------------------------------------------
