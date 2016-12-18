@@ -19,6 +19,7 @@
 
 import rospy
 from atomic_msgs import AtomicMsgs
+import time
 
 # XXX defined in head/src/vision/ros_nmpt_saliency
 from ros_nmpt_saliency.msg import targets
@@ -39,5 +40,7 @@ class SaliencyTrack:
 		x=1.0
 		y=-1.0*(loc.x*2.0-1.0)
 		#print "locations x="+str(x)+" y="+str(y)+" z="+str(z)+"\n"
+		time.sleep(0.5)
+		# print("salint sleep 1/2 second")
 		self.atomo.saliency(x,y,z,data.degree)
 

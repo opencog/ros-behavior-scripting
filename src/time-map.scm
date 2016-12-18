@@ -31,7 +31,7 @@
 ; This map will be udates every 66 millisdeconds (about 15 Hz), and
 ; will buffer 150 frames (about 10 seconds), and work with a one
 ; centimeter resolution (the native coords of the map are meters).
-(create-map "faces" 0.01 66 150)
+(create-map "faces" 0.01 166 150)
 
 ; Run the map in a new thread. This will autoamtically create a new
 ; time-slice every 66 milliseconds.

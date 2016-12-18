@@ -24,6 +24,7 @@ from std_msgs.msg import Int32
 from pi_face_tracker.msg import FaceEvent, Faces
 
 from atomic_msgs import AtomicMsgs
+import time
 
 logger = logging.getLogger('hr.eva_behavior.face_track')
 
@@ -80,7 +81,7 @@ class FaceTrack:
 
 		self.visible_faces.append(faceid)
 
-		logger.info("New face added to visibile faces: " +
+		print("New face added to visibile faces: " +
 			str(self.visible_faces))
 		self.atomo.add_face_to_atomspace(faceid)
 
@@ -92,13 +93,13 @@ class FaceTrack:
 		if faceid in self.visible_faces:
 			self.visible_faces.remove(faceid)
 
-		logger.info("Lost face; visibile faces now: " + str(self.visible_faces))
+		print("Lost face; visibile faces now: " + str(self.visible_faces))
 
 	# Force the robot to turn its attention to the given
 	# face (to interact with, talk with) that face.
 	def track_face(self, faceid):
 		if faceid in self.visible_faces:
-			logger.info("Face requested interaction: " + str(faceid))
+			print("Face requested interaction: " + str(faceid))
 			self.atomo.add_tracked_face_to_atomspace(faceid)
 
 	# ----------------------------------------------------------
@@ -132,6 +133,8 @@ class FaceTrack:
 			# Update location of a face. The location is stored in the
 			# OpenCog space server (octomap).
 			if face.id in self.visible_faces:
+				time.sleep (0.1)
+				print "updating face loc for " + str(face.id)
 				self.atomo.update_face_octomap(face.id,
 				            face.point.x, face.point.y, face.point.z)
 

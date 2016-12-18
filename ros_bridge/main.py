@@ -28,6 +28,10 @@ from sound_track import SoundTrack
 from room_brightness import RoomBrightness
 from saliency_track import SaliencyTrack
 
+import time
+
+time.sleep(15)
+
 
 rospy.init_node("OpenCog_ROS_bridge")
 logging.info("Starting the OpenCog ROS Bridge")
