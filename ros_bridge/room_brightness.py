@@ -31,8 +31,14 @@ from room_luminance.msg import Luminance
 
 class RoomBrightness:
 	def __init__(self):
+		self.cnt=0
 		self.atomo = AtomicMsgs()
 		rospy.Subscriber('/opencog/room_luminance', Luminance, self.bright_cb)
 
 	def bright_cb(self, data):
+		self.cnt=self.cnt+1
+		if self.cnt>6:
+			self.cnt=0
+		else:
+			return
 		self.atomo.room_brightness(data.value)

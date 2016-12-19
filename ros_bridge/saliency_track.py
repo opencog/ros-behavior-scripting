@@ -31,16 +31,21 @@ from ros_nmpt_saliency.msg import targets
 
 class SaliencyTrack:
 	def __init__(self):
+		self.cnt=0
 		self.atomo = AtomicMsgs()
 		rospy.Subscriber('/nmpt_saliency_point', targets, self.sal_cb)
 
 	def sal_cb(self, data):
+		self.cnt=self.cnt+1
+		if self.cnt>6:
+			self.cnt=0
+		else:
+			return
 		loc = data.positions[0]
 		z=-(loc.y*2.0-1.0)
 		x=1.0
 		y=-1.0*(loc.x*2.0-1.0)
-		#print "locations x="+str(x)+" y="+str(y)+" z="+str(z)+"\n"
-		time.sleep(0.5)
+		print "locations x="+str(x)+" y="+str(y)+" z="+str(z)+"\n"
+		#time.sleep(0.5)
 		# print("salint sleep 1/2 second")
 		self.atomo.saliency(x,y,z,data.degree)
-

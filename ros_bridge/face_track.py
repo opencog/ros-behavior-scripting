@@ -45,7 +45,7 @@ class FaceTrack:
 	C_FACE_TRACKING = C_FACE | C_EYES
 
 	def __init__(self):
-
+		self.cnt=0
 		# The OpenCog API. This is used to send face data to OpenCog.
 		self.atomo = AtomicMsgs()
 
@@ -128,12 +128,17 @@ class FaceTrack:
 	def face_loc_cb(self, data):
 		if not self.control_mode & self.C_FACE_TRACKING:
 			return
+		self.cnt=self.cnt+1
+		if self.cnt>4:
+			self.cnt=0
+		else:
+			return
 
 		for face in data.faces:
 			# Update location of a face. The location is stored in the
 			# OpenCog space server (octomap).
 			if face.id in self.visible_faces:
-				time.sleep (0.1)
+				#time.sleep (0.1)
 				print "updating face loc for " + str(face.id)
 				self.atomo.update_face_octomap(face.id,
 				            face.point.x, face.point.y, face.point.z)
