@@ -28,7 +28,7 @@ from geometry_msgs.msg import PoseStamped # for sound localization
 class SoundTrack:
 
 	def __init__(self):
-
+		self.cnt=0
 		# The OpenCog API. This is used to send sound localization
 		# data to OpenCog.
 		self.atomo = AtomicMsgs()
@@ -48,6 +48,11 @@ class SoundTrack:
 	# OpenCog space server.  This data arrives at a rate of about
 	# 30 Hz, currently, from ManyEars.
 	def sound_cb(self, msg):
+		self.cnt=self.cnt+1
+		if self.cnt>4:
+			self.cnt=0
+		else:
+			return
 		# Convert to camera coordinates, using an affine matrix
 		# (which combines a rotation and translation).
 		#
