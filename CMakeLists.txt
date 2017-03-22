@@ -9,7 +9,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 # Only list install files that have actually changed
 set( CMAKE_INSTALL_MESSAGE "LAZY" )
 
-PROJECT(ros-behavior-scripting)
+# The package name MUST match that in the project.xml file
+# and, because it's python, must use underscores, not dashes.
+PROJECT(ros_behavior_scripting)
 
 # ===================================================================
 # ROS stuff
