@@ -21,7 +21,11 @@ import rospy
 from atomic_msgs import AtomicMsgs
 
 # XXX FIXME -- where the heck is audio_stream.msg defined ?????
-from audio_stream.msg import audiodata
+# Its defined somewhere deep in the bowels of HEAD.   Just copy
+# it here, instead. See bug #162 for details.
+#
+# from audio_stream.msg import audiodata
+from msg import audiodata
 
 '''
     This implements a ROS node that subscribes to the `audio_sensors`
