@@ -24,7 +24,6 @@ IF (NOT DEFINED DATADIR)
 ENDIF (NOT DEFINED DATADIR)
 
 ADD_SUBDIRECTORY(movement)
-ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(webui)
 
 # ===================================================================
