@@ -31,8 +31,6 @@
 (add-to-load-path "/usr/local/share/opencog/scm")
 
 (use-modules (opencog))
-(use-modules (opencog query))  ; XXX work-around relex2logic bug
-(load "time-map.scm") ;;; octomap for faces
 ; Start the cogsserver.  It is used by the face-tracker to poke data
 ; into the atomspace.
 (use-modules (opencog cogserver))
@@ -57,9 +55,7 @@
 (use-modules (opencog eva-behavior))
 
 ; Load the Sophia personality configuration.
-; (display %load-path)
-(add-to-load-path "../src")
-(load-from-path "cfg-sophia.scm") ;;; <<<=== See, its Sophia here!
+(load-sophia-config)
 
 ;; Call (run) to run the main loop, (halt) to pause the loop.
 ;; The main loop runs in its own thread.
@@ -73,6 +69,7 @@
 ;(use-modules (opencog nlp))
 ;(use-modules (opencog nlp chatbot-eva))
 
+; (use-modules (opencog query))  ; XXX work-around relex2logic bug
 ; Work-around to weird bug: must load relex2logic at the top level.
 ;(use-modules (opencog nlp relex2logic))
 
