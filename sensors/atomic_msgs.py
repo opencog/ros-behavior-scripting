@@ -39,14 +39,7 @@ class AtomicMsgs:
 
 	def wholeshow_start(self):
 		netcat(self.hostname, self.port, "(enable-all-demos)")
-		# pipe stdout to /dev/null, as otherwise the the stdout pipe
-		# attached to the evaluator will fill up with messages, (which
-		# no one, i.e. python, ever fetches) and then stall.
-		# XXX FIXME .. this was needed for the old interface;
-		# I don't think it's needed any more, for this new netcat
-		# interface ....
-		netcat(self.hostname, self.port, \
-			'(set-current-output-port (%make-void-port "w"))(run)')
+		netcat(self.hostname, self.port, '(run)')
 
 	# --------------------------------------------------------
 	# Set the facetracking state in atomspace
