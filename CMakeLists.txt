@@ -16,6 +16,10 @@ PROJECT(ros_behavior_scripting)
 # ===================================================================
 # ROS stuff
 
+# execute_process(COMMAND "bash /opt/ros/indogo/setup.bash")
+
+# The find_package below fails, unless the setup above is sourced,
+# first.  Oh well.
 find_package(catkin REQUIRED COMPONENTS
     rospy
     std_msgs
