@@ -15,20 +15,14 @@ PROJECT(ros-behavior-scripting)
 # ===================================================================
 # global includes
 
-# set confdir and datadir
-IF (NOT DEFINED CONFDIR)
-	SET (CONFDIR "${CMAKE_INSTALL_PREFIX}/etc")
-ENDIF (NOT DEFINED CONFDIR)
-IF (NOT DEFINED DATADIR)
-	SET (DATADIR "${CMAKE_INSTALL_PREFIX}/share/opencog")
-ENDIF (NOT DEFINED DATADIR)
-
 ADD_SUBDIRECTORY(movement)
-ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(webui)
 
 # ===================================================================
 # packaging
+# XXX FIXME what the heck is this stuff?  Do we need this?
+# Can we get rid of it ??  WHo uses this, and for what?
+#
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The OpenCog ROS Behavior Scripts")
 SET(CPACK_PACKAGE_NAME "ros-behavior-scripting")
 SET(CPACK_PACKAGE_VENDOR "opencog.org")
