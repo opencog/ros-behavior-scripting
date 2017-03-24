@@ -33,19 +33,17 @@
 
 ; Load the behavior trees.
 (use-modules (opencog eva-behavior))
-(use-modules (opencog openpsi))
 
+; Load the ROS-blender animation API.
 (use-modules (opencog movement))
 (start-ros-movement-node)
 
 ; Load the Sophia personality configuration.
 (load-sophia-config)
 
-;; Load the actual psi rules.
-(load-from-path "psi-behavior.scm")
-
 ;; Call (run) to run the main loop, (halt) to pause the loop.
 ;; The main loop runs in its own thread.
+(use-modules (opencog openpsi))
 (define (run) (psi-run))
 (define (halt) (psi-halt))
 
