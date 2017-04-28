@@ -13,6 +13,11 @@ set( CMAKE_INSTALL_MESSAGE "LAZY" )
 # and, because it's python, must use underscores, not dashes.
 PROJECT(ros_behavior_scripting)
 
+# Set datadir
+IF (NOT DEFINED DATADIR)
+	SET (DATADIR "${CMAKE_INSTALL_PREFIX}/share/opencog")
+ENDIF (NOT DEFINED DATADIR)
+
 # ===================================================================
 # ROS stuff
 
