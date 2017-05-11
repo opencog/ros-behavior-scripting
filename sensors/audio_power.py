@@ -25,7 +25,8 @@ from atomic_msgs import AtomicMsgs
 # it here, instead. See bug #162 for details.
 #
 # from audio_stream.msg import audiodata
-from msg import audiodata
+# from msg import audiodata
+from hr_msgs.msg import audiodata
 
 '''
     This implements a ROS node that subscribes to the `audio_sensors`
