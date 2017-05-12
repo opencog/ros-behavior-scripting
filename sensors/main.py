@@ -19,6 +19,11 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+# XXX To be removed when https://github.com/hansonrobotics/HEAD/issues/618
+# is resolved nicely
+import sys
+sys.path.append("/opt/hansonrobotics/ros/lib/python2.7/dist-packages/")
+
 import logging
 import rospy
 from affect import Affect
@@ -32,7 +37,6 @@ from sound_track import SoundTrack
 from room_brightness import RoomBrightness
 from saliency_track import SaliencyTrack
 from tts_feedback import TTSFeedback
-
 
 rospy.init_node("OpenCog_ROS_bridge")
 logging.info("Starting the OpenCog ROS Bridge")
