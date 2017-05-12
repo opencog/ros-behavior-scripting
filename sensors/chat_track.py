@@ -19,7 +19,8 @@
 
 import rospy
 # from chatbot.msg import ChatMessage
-from msg import ChatMessage
+# from msg import ChatMessage
+from hr_msgs.msg import ChatMessage
 from atomic_msgs import AtomicMsgs
 
 '''

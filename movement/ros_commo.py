@@ -35,7 +35,8 @@ from blender_api_msgs.msg import BlinkCycle
 from blender_api_msgs.msg import SaccadeCycle
 from blender_api_msgs.msg import SomaState
 # from chatbot.msg import ChatMessage
-from msg import ChatMessage
+# from msg import ChatMessage
+from hr_msgs.msg import ChatMessage
 
 logger = logging.getLogger('hr.OpenCog_Eva')
 

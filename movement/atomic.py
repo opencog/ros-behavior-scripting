@@ -25,6 +25,11 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+# XXX To be removed when https://github.com/hansonrobotics/HEAD/issues/618
+# is resolved nicely
+import sys
+sys.path.append("/opt/hansonrobotics/ros/lib/python2.7/dist-packages/")
+
 import rospy
 from ros_commo import EvaControl
 from opencog.atomspace import TruthValue
