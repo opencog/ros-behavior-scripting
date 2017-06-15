@@ -8,6 +8,8 @@
 ; needed for nlp parsing
 (use-modules (opencog nlp) (opencog nlp chatbot) (opencog nlp chatbot-psi))
 
+(use-modules (opencog eva-behavior)) ; for get-input-sent-node def
+
 ; Param setting
 (define valence-activation-level .5)
 
