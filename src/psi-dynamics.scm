@@ -343,6 +343,9 @@
 	;	(max (min (- pos-valence (/ (- arousal .5) 2)) 1) 0) )
 
 	(psi-set-current-emotion-state)
+
+	; return atom for ExOutLink requirement
+	(True)
 )
 
 ; Current emotion state
