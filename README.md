@@ -1,24 +1,24 @@
-Robot ROS Sensory+Motor API
-===========================
+Eva Robot ROS Sensory+Motor API
+===============================
 This repo contains ROS nodes for sensory input (vision, audio) and
-motor movements for the Hanson Robotics Eva robot.  This repo used to
-contain more of the subsystem, but all of that code has been moved
-here, instead:
+motor movements for the Hanson Robotics Eva robot.  Previously, this
+repo used to contain more of the subsystem, but all of that code has
+been moved to the main OpenCog repo:
 
 https://github.com/opencog/opencog/tree/master/opencog/eva
 
 What is left here is an assortment of ROS nodes that subscribe
 to ROS visual and audio sensory inputs, and forward these to the
-opencog spactime server (performing the needed format conversion).
+OpenCog spactime server (performing the needed format conversion).
 
 Design goals
 ------------
-provide a convenient, flexible interface between ROS and the OpenCog
+Provide a convenient, flexible interface between ROS and the OpenCog
 servers.
 
 Current Architecture and Design
 -------------------------------
-The this time, the code here integrates three subsystems:
+At this time, the code here provides a perception subsystem:
 
  * Several ROS nodes that forward visual and sound data to the
    OpenCog spacetime server. This includes 3D locations of visible
@@ -48,7 +48,7 @@ Some things it currently doesn't do, but should:
 
 Status
 ------
-Works.
+It works and is in regular (daily) use (2015, 2016, 2017...).
 
 Running
 -------
