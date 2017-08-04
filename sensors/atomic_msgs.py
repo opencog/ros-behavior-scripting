@@ -29,7 +29,7 @@ class AtomicMsgs:
 
 	def __init__(self):
 		self.hostname = "localhost"
-		self.port = 17020
+		self.port = 17001
 
 	# --------------------------------------------------------
 	# Wholeshow control -- Start and stop openpsi
