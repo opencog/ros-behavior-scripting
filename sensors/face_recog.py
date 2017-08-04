@@ -20,8 +20,8 @@
 import rospy
 from atomic_msgs import AtomicMsgs
 
-from face_id.msg import f_id
-from face_id.msg import faces_ids
+from hr_msgs.msg import f_id
+from hr_msgs.msg import faces_ids
 
 # Push information about recognized faces into the atomspace.
 #

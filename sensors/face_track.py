@@ -21,7 +21,7 @@ import rospy
 import logging
 
 from std_msgs.msg import Int32
-from pi_face_tracker.msg import FaceEvent, Faces
+from hr_msgs.msg import FaceEvent, Faces
 
 from atomic_msgs import AtomicMsgs
 

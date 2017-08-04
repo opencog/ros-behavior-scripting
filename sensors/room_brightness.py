@@ -20,8 +20,7 @@
 import rospy
 from atomic_msgs import AtomicMsgs
 
-# XXX defined in HEAD/src/vision/room_luminance/msg
-from room_luminance.msg import Luminance
+from hr_msgs.msg import Luminance
 
 '''
     This implements a ROS node that subscribes to the

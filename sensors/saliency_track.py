@@ -20,8 +20,7 @@
 import rospy
 from atomic_msgs import AtomicMsgs
 
-# XXX defined in head/src/vision/ros_nmpt_saliency
-from ros_nmpt_saliency.msg import targets
+from hr_msgs.msg import targets
 
 '''
 	This implements a ROS node that subscribes to the `/nmpt_saliency_point`
@@ -40,4 +39,3 @@ class SaliencyTrack:
 		y=-1.0*(loc.x*2.0-1.0)
 		#print "locations x="+str(x)+" y="+str(y)+" z="+str(z)+"\n"
 		self.atomo.saliency(x,y,z,data.degree)
-

@@ -18,8 +18,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 import rospy
-# from chatbot.msg import ChatMessage
-# from msg import ChatMessage
 from hr_msgs.msg import ChatMessage
 from atomic_msgs import AtomicMsgs
 
