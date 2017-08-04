@@ -43,5 +43,3 @@ except:
     exec(open('/usr/local/share/opencog/python/atomic-dbg.py').read())
     print 'Loaded the OpenCog Movement Debug API'
 "))
-
-(start-ros-movement-node)
