@@ -20,12 +20,6 @@
 import rospy
 from atomic_msgs import AtomicMsgs
 
-# XXX FIXME -- where the heck is audio_stream.msg defined ?????
-# Its defined somewhere deep in the bowels of HEAD.   Just copy
-# it here, instead. See bug #162 for details.
-#
-# from audio_stream.msg import audiodata
-# from msg import audiodata
 from hr_msgs.msg import audiodata
 
 '''
