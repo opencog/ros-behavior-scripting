@@ -50,6 +50,24 @@ Status
 ------
 It works and is in regular (daily) use (2015, 2016, 2017...).
 
+Setup
+-------
+Initial setup, only needed to be run once.
+```
+bash scripts/setup.sh
+```
+
+Build & Install
+-------
+Run the following commands.
+```
+mkdir build
+cd build/
+source /opt/hansonrobotics/ros/setup.bash
+cmake ..
+sudo make install
+```
+
 Running
 -------
 See the README file in the opencog repo:
