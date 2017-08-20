@@ -7,6 +7,7 @@ GIT_REPO="$(dirname $(readlink -f ${BASH_SOURCE[0]}))/.."
 
 curl https://raw.githubusercontent.com/hansonrobotics/hrtool/master/get_hr.bash|bash
 
+hr install -p head-hr
 hr install head-deps
 echo yes | hr init
 hr update head
