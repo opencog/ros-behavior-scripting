@@ -7,7 +7,7 @@ GIT_REPO="$(dirname $(readlink -f ${BASH_SOURCE[0]}))/.."
 
 # Install hrtool.
 curl https://raw.githubusercontent.com/hansonrobotics/hrtool/master/get_hr.bash|bash
-hr install -p head-hr head-hr-ext
+hr install head-hr head-hr-ext
 
 # Install dependencies for running the robot.
 hr install head-deps
@@ -34,3 +34,7 @@ fi
 
 # Configure ros-behavior-scripting for building using `hr build opencog`
 ln -s "$GIT_REPO" "$HR_WS/HEAD/src/ros-behavior-scripting"
+
+# Upgrade hrtool to be able to build ros-behavior-scripting. This is a hack
+# beacause of a bug in hrtool.
+hr install -p head-hr
