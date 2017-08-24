@@ -70,11 +70,11 @@ sudo make install
 
 Running
 -------
-See the README file in the opencog repo:
-
-https://github.com/opencog/opencog/tree/master/opencog/eva
-
-It provides details on how to start and run the system.
+Run the following commands.
+```
+bash bash scripts/run.sh <robot-name>
+```
+<robot-name> could be `han` or `sophia`
 
 TODO
 ----
