@@ -18,7 +18,7 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-hr run $1
+hr run --dev $1
 
 # Start the cogserver
 tmux new-window -n "openpsi" \
