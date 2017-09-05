@@ -14,7 +14,7 @@ PYTHON_PATH="${PYTHONPATH}:/usr/local/lib/python2.7/dist-packages"
 
 # Run a robot/simulation.
 if [ $# -eq 0 ]; then
-  echo "Pass at least the robot name, which would be passed on to 'hr run'"
+  echo "Pass at the robot name, which would be passed on to 'hr run --dev'"
   exit 1
 fi
 
