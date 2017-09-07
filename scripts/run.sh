@@ -2,7 +2,6 @@
 #
 # Script for running opencog with HEAD.
 
-
 source /opt/hansonrobotics/ros/setup.bash
 
 # hrtool workspace
