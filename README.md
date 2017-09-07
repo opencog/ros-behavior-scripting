@@ -57,15 +57,11 @@ Initial setup, only needed to be run once.
 bash scripts/setup.sh
 ```
 
-Build & Install
+Install
 -------
 Run the following commands.
 ```
-mkdir build
-cd build/
-source /opt/hansonrobotics/ros/setup.bash
-cmake ..
-sudo make install
+bash scripts/install.sh
 ```
 
 Running
