@@ -30,6 +30,7 @@ class AtomicMsgs:
 	def __init__(self):
 		self.hostname = "localhost"
 		self.port = 17001
+		self.OCTOMAP_NAME = "faces"
 
 	# --------------------------------------------------------
 	# Wholeshow control -- Start and stop openpsi
@@ -104,9 +105,13 @@ class AtomicMsgs:
 
 	# Face postions in the space-server
 	def update_face_octomap(self, faceid, xx, yy, zz):
-		face = "(map-ato \"faces\" (NumberNode \"" + str(faceid) + \
-		        "\" (av 5 0 0)) " + str(xx) + " " + str(yy) + \
-		        " " + str(zz) + ")\n"
+		face = '(cog-pointmem-map-atom (ConceptNode "'+self.OCTOMAP_NAME+'") \
+               (NumberNode "'+ str(faceid)+'" (av 5 0 0)) \
+               (ListLink (NumberNode "'+ str(xx)+'") \
+                         (NumberNode "'+ str(yy)+'") \
+                         (NumberNode "'+ str(zz)+'")))'
+		face = face + "\n"
+		print("Sending message %s " % face)
 		netcat(self.hostname, self.port, face)
 
 	# --------------------------------------------------------
