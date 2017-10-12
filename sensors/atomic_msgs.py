@@ -30,6 +30,10 @@ class AtomicMsgs:
 	def __init__(self):
 		self.hostname = "localhost"
 		self.port = 17001
+		self.OCTOMAP_NAME = "faces"
+		self.SPATIAL_RESOLUTION = "0.1"
+		self.TIME_RESOLUTION = "10"
+		self.TIME_UNITS = "100"
 
 	# --------------------------------------------------------
 	# Wholeshow control -- Start and stop openpsi
@@ -102,11 +106,25 @@ class AtomicMsgs:
 				"(cog-delete (NumberNode \"" + str(faceid) + "\"))\n"
 		return face
 
+	def create_face_octomap(self):
+		ldcmd = '(use-modules (opencog pointmem))'
+		cmd = '(cog-pointmem-create-map (ConceptNode "'+self.OCTOMAP_NAME+'") \
+               (ListLink (NumberNode "'+ self.SPATIAL_RESOLUTION+'") \
+                         (NumberNode "'+ self.TIME_RESOLUTION+'") \
+                         (NumberNode "'+ self.TIME_UNITS+'")))'
+		cmd = ldcmd + "\n" + cmd + "\n"
+		print("Sending message %s " % cmd)
+		netcat(self.hostname, self.port, cmd)
+
 	# Face postions in the space-server
 	def update_face_octomap(self, faceid, xx, yy, zz):
-		face = "(map-ato \"faces\" (NumberNode \"" + str(faceid) + \
-		        "\" (av 5 0 0)) " + str(xx) + " " + str(yy) + \
-		        " " + str(zz) + ")\n"
+		face = '(cog-pointmem-map-atom (ConceptNode "'+self.OCTOMAP_NAME+'") \
+               (NumberNode "'+ str(faceid)+'" (av 5 0 0)) \
+               (ListLink (NumberNode "'+ str(xx)+'") \
+                         (NumberNode "'+ str(yy)+'") \
+                         (NumberNode "'+ str(zz)+'")))'
+		face = face + "\n"
+		print("Sending message %s " % face)
 		netcat(self.hostname, self.port, face)
 
 	# --------------------------------------------------------

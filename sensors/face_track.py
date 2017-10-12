@@ -49,6 +49,7 @@ class FaceTrack:
 
 		# The OpenCog API. This is used to send face data to OpenCog.
 		self.atomo = AtomicMsgs()
+		self.atomo.create_face_octomap()
 
 		# List of currently visible faces
 		self.visible_faces = []
