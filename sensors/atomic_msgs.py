@@ -31,6 +31,9 @@ class AtomicMsgs:
 		self.hostname = "localhost"
 		self.port = 17001
 		self.OCTOMAP_NAME = "faces"
+		self.SPATIAL_RESOLUTION = "0.1"
+		self.TIME_RESOLUTION = "10"
+		self.TIME_UNITS = "100"
 
 	# --------------------------------------------------------
 	# Wholeshow control -- Start and stop openpsi
@@ -102,6 +105,16 @@ class AtomicMsgs:
 				"  (ListLink (NumberNode \"" + str(faceid) + "\")))\n" + \
 				"(cog-delete (NumberNode \"" + str(faceid) + "\"))\n"
 		return face
+
+	def create_face_octomap(self):
+		ldcmd = '(use-modules (opencog pointmem))'
+		cmd = '(cog-pointmem-create-map (ConceptNode "'+self.OCTOMAP_NAME+'") \
+               (ListLink (NumberNode "'+ self.SPATIAL_RESOLUTION+'") \
+                         (NumberNode "'+ self.TIME_RESOLUTION+'") \
+                         (NumberNode "'+ self.TIME_UNITS+'")))'
+		cmd = ldcmd + "\n" + cmd + "\n"
+		print("Sending message %s " % cmd)
+		netcat(self.hostname, self.port, cmd)
 
 	# Face postions in the space-server
 	def update_face_octomap(self, faceid, xx, yy, zz):
