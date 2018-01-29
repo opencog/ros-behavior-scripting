@@ -2,12 +2,13 @@
 #
 # Script for building and installing.
 
-SOURCE_DIR=$(git rev-parse --show-toplevel)
-if [ ! -d "$SOURCE_DIR/build" ]; then
-    mkdir "$SOURCE_DIR/build"
+GIT_REPO="$(dirname $(readlink -f ${BASH_SOURCE[0]}))/.."
+
+if [ ! -d "$GIT_REPO/build" ]; then
+    mkdir "$GIT_REPO/build"
 fi
 
-cd build
+cd $GIT_REPO/build
 source /opt/hansonrobotics/ros/setup.bash
 cmake ..
 sudo make install
