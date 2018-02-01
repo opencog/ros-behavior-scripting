@@ -68,9 +68,9 @@ Running
 -------
 Run the following commands.
 ```
-bash bash scripts/run.sh <robot-name>
+bash scripts/run.sh <robot-name>
 ```
-<robot-name> could be `han` or `sophia`
+<robot-name> could be `han` or `sophia10`
 
 TODO
 ----

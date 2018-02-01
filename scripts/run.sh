@@ -2,6 +2,9 @@
 #
 # Script for running opencog with HEAD.
 
+set -e
+_session_name="opencog"
+
 source /opt/hansonrobotics/ros/setup.bash
 
 # hrtool workspace
@@ -17,18 +20,36 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-hr run --dev $1
+# NOTE: Since the HEAD services may fail randomly, start opencog
+# in separate tmux session.
+start_opencog_tmux_session()
+{
+  echo "Start opencog services in a new background tmux session"
+  # Start relex
+  tmux new-session -d -s "$_session_name" -n "relex" \
+    "cd $HR_WS/OpenCog/relex &&
+    bash opencog-server.sh;
+    $SHELL"
 
-# Start the cogserver
-tmux new-window -n "openpsi" \
-  "export PYTHONPATH=$PYTHON_PATH &&
-  cd $HR_WS/opencog/opencog/opencog/eva/src/ &&
-  guile -l btree-psi.scm ;
-  $SHELL"
+  # Start the cogserver
+  tmux new-window -t "$_session_name:" -n "ghost" \
+    "cd $HR_WS/OpenCog/ros-behavior-scripting/scripts &&
+    guile -l config.scm;
+    $SHELL"
 
-# Start passing sensory inputs to the cogserver
-tmux new-window -n "rbs" \
-  "export PYTHONPATH=$PYTHON_PATH &&
-  cd $HR_WS/opencog/ros-behavior-scripting/sensors &&
-  python main.py ;
-  $SHELL"
+  # Start passing sensory inputs to the cogserver
+  tmux new-window -t "$_session_name:" -n "rbs" \
+    "export PYTHONPATH=$PYTHON_PATH &&
+    cd $HR_WS/OpenCog/ros-behavior-scripting/sensors &&
+    python main.py ;
+    $SHELL"
+
+  echo "Finished starting opencog services in a new background tmux session"
+}
+
+# Start opencog tmux session
+tmux has-session -t "$_session_name" || start_opencog_tmux_session
+
+# Start HEAD tmux session
+tmux has-session -t "$1" || hr run --dev $1
+
