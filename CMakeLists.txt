@@ -29,7 +29,6 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   geometry_msgs
   hr_msgs
-  pi_face_tracker
   rospy
   std_msgs
 )
