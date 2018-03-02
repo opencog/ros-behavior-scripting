@@ -18,6 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 import rospy
+from atomic_msgs import AtomicMsgs
 from ros_googlespeech.msg import Utterance
 
 '''

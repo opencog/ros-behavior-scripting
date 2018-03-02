@@ -14,11 +14,6 @@ HR_WS="$(hr env | grep HR_WORKSPACE | cut -d = -f 2)"
 # the PYTHONPATH
 PYTHON_PATH="${PYTHONPATH}:/usr/local/lib/python2.7/dist-packages"
 
-# Run a robot/simulation.
-if [ $# -eq 0 ]; then
-  echo "Pass at the robot name, which would be passed on to 'hr run --dev'"
-  exit 1
-fi
 
 # NOTE: Since the HEAD services may fail randomly, start opencog
 # in separate tmux session.
@@ -51,5 +46,4 @@ start_opencog_tmux_session()
 tmux has-session -t "$_session_name" || start_opencog_tmux_session
 
 # Start HEAD tmux session
-tmux has-session -t "$1" || hr run --dev $1
-
+tmux has-session -t "sophia10" || hr run
