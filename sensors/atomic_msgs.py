@@ -37,6 +37,7 @@ class AtomicMsgs:
 
 	# --------------------------------------------------------
 	# Wholeshow control -- Start and stop openpsi
+	# XXX Not functional
 	def wholeshow_stop(self):
 		netcat(self.hostname, self.port, "(disable-all-demos)")
 		netcat(self.hostname, self.port, "(halt)")
@@ -44,36 +45,6 @@ class AtomicMsgs:
 	def wholeshow_start(self):
 		netcat(self.hostname, self.port, "(enable-all-demos)")
 		netcat(self.hostname, self.port, '(run)')
-
-	# --------------------------------------------------------
-	# Set the facetracking state in atomspace
-	def update_ft_state_to_atomspace(self, enabled):
-		if enabled:
-			state = 'on'
-		else:
-			state = 'off'
-		face = '(StateLink face-tracking-state face-tracking-%s)\n' % state
-		netcat(self.hostname, self.port, face)
-
-	# --------------------------------------------------------
-	# Face-tracking stuff
-
-	# Add a newly visible face to the atomspace.
-	def add_face_to_atomspace(self, faceid):
-		face = "(EvaluationLink (PredicateNode \"visible face\") " + \
-		       "(ListLink (NumberNode \"" + str(faceid) + "\")))\n"
-		netcat(self.hostname, self.port, face)
-		print "New visible face in atomspace: ", faceid
-
-	# Focus attention on specific face.
-	# Build string to force attention to focus on the requested face.
-	# This bypasses the normal "new face is visible" sequence, and
-	# immediately shifts Eva's attention to this face.
-	def add_tracked_face_to_atomspace(self, faceid):
-		face = '(StateLink request-eye-contact-state (NumberNode "' + \
-		       str(faceid) + '"))\n'
-		netcat(self.hostname, self.port, face)
-		print "Force focus of attention on face: ", faceid
 
 
 	# Face postions in the space-server
@@ -88,21 +59,6 @@ class AtomicMsgs:
 		print("Sending message %s " % face)
 		netcat(self.hostname, self.port, face)
 
-	# --------------------------------------------------------
-
-	def face_recognition(self, tracker_id, name):
-		'''
-		Associate a face-recognition ID with a face-tracker ID.
-
-		`tracker_id` is the ID that the 3D face-location tracker is using.
-		Currently, the tracker-ID is an integer, stored as a NumberNode
-		in the atomspace.
-
-		`rec_id` is "0" for an unrecognized face and some other string
-		for a recognized face. It is currently stored as a ConceptNode.
-		'''
-		fc = '(make-recognized-face ' + str(tracker_id) + ' "' + name + '")\n'
-		netcat(self.hostname, self.port, fc)
 
 	# --------------------------------------------------------
 	# Speech-to-text stuff
@@ -110,8 +66,6 @@ class AtomicMsgs:
 		spoke = "(ghost \"" + stt + "\")\n"
 		netcat(self.hostname, self.port, spoke)
 
-	# --------------------------------------------------------
-	# Speech-to-text stuff
 	def perceived_word(self, stt):
 		spoke = "(perceived-word \"" + stt + "\")\n"
 		netcat(self.hostname, self.port, spoke)
