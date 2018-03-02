@@ -19,10 +19,15 @@
 
 import rospy
 from atomic_msgs import AtomicMsgs
-
 from ros_peoplemodel.msg import Face
 from ros_peoplemodel.msg import Faces
 
+'''
+Subscribes to topics published by
+    https://github.com/elggem/ros_peoplemodel
+and forwards them to OpenCog as per
+    https://github.com/opencog/opencog/tree/master/opencog/ghost
+'''
 
 EMOTIONS = {
     0 : "anger",
@@ -44,7 +49,7 @@ class PeopleModel:
 		for face in data.faces:
 			if face.face_id is "":
 				continue
-			
+
 			self.atomo.perceived_face(face.face_id,
 									  face.position.x,
 									  face.position.y,
