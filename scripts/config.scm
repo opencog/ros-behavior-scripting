@@ -15,12 +15,12 @@
 )
 (define (multiple-rules)
   (use-modules (opencog eva-behavior))
-  (ghost-parse-file "toy-sensors.ghost")
+  (ghost-parse-file "test.ghost")
 )
 
 (define (ros-multiple-rules)
   (use-modules (opencog movement))
-  (ghost-parse-file "toy-sensors.ghost")
+  (ghost-parse-file "test.ghost")
 )
 
 ; TODO: change to command-line argument.
