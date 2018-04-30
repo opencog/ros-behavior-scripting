@@ -20,7 +20,6 @@
 import rospy
 from atomic_msgs import AtomicMsgs
 from hr_msgs.msg import ChatMessage
-from std_msgs.msg import String
 
 '''
 Subscribes to topics published by
@@ -34,8 +33,8 @@ class GoogleSpeech:
 	def __init__(self):
 		self.atomo = AtomicMsgs()
 		robot_name = rospy.get_param("robot_name")
-		rospy.Subscriber(robot_name+"/words", String, self.perceived_word)
-		rospy.Subscriber(robot_name+"/speech", String, self.perceived_sentence)
+		rospy.Subscriber(robot_name+"/words", ChatMessage, self.perceived_word)
+		rospy.Subscriber(robot_name+"/speech", ChatMessage, self.perceived_sentence)
 
 	def perceived_word(self, msg):
 		self.atomo.perceived_sentence(msg.utterance)
