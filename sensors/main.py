@@ -46,18 +46,6 @@ rospy.init_node("OpenCog_ROS_bridge")
 logging.info("Starting the OpenCog ROS Bridge")
 print "Starting the OpenCog ROS Bridge"
 
-#co = Control()
-#cp = ControlPsi()
-#af = Affect()
-#ap = AudioPower()
-#ct = ChatTrack()
-#fc = FaceRecog()
-#ft = FaceTrack()
-#st = SoundTrack()
-#br = RoomBrightness()
-#sl = SaliencyTrack()
-#tf = TTSFeedback
-
 googlespeech = GoogleSpeech()
 peoplemodel = PeopleModel()
 
