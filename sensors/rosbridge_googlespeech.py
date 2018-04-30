@@ -33,7 +33,7 @@ class GoogleSpeech:
 
 	def __init__(self):
 		self.atomo = AtomicMsgs()
-        robot_name = rospy.get_param("robot_name")
+		robot_name = rospy.get_param("robot_name")
 		rospy.Subscriber(robot_name+"/words", String, self.perceived_word)
 		rospy.Subscriber(robot_name+"/speech", String, self.perceived_sentence)
 
