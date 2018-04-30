@@ -43,7 +43,7 @@ EMOTIONS = {
 class PeopleModel:
 	def __init__(self):
 		self.atomo = AtomicMsgs()
-		rospy.Subscriber('/people', Faces, self.faces_cb)
+		rospy.Subscriber('/faces', Faces, self.faces_cb)
 
 	def faces_cb(self, data):
 		for face in data.faces:
