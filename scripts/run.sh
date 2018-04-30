@@ -29,21 +29,25 @@ start_opencog_tmux_session()
   # Start the cogserver
   tmux new-window -t "$_session_name:" -n "cogserver" \
     "cd $HR_WS/OpenCog/ros-behavior-scripting/scripts &&
-    cogserver ./cogserver.conf"
+    guile -l config.scm;
+    $SHELL"
 
   # Start passing sensory inputs to the cogserver
-  #tmux new-window -t "$_session_name:" -n "rbs" \
-  #  "export PYTHONPATH=$PYTHON_PATH &&
-  #  cd $HR_WS/OpenCog/ros-behavior-scripting/sensors &&
-  #  python main.py ;
-  #  $SHELL"
+  tmux new-window -t "$_session_name:" -n "rbs" \
+    "export PYTHONPATH=$PYTHON_PATH &&
+    cd $HR_WS/OpenCog/ros-behavior-scripting/sensors &&
+    python main.py ;
+    $SHELL"
 
   # Start the cogserver
-  tmux new-window -t "$_session_name:" -n "telnet-cogserver" \
-    "rlwrap telnet localhost 17001"
+  tmux new-window -t "$_session_name:" -n "cogserver-shell" \
+    "rlwrap telnet localhost 17001;
+    $SHELL"
 
   echo "Finished starting opencog services in a new background tmux session"
 }
 
 # Start opencog tmux session
 tmux has-session -t "$_session_name" || start_opencog_tmux_session
+
+tmux a -t "$_session_name"
