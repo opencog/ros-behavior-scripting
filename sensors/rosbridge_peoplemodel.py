@@ -58,5 +58,5 @@ class PeopleModel:
 			if len(face.emotions)>0:
 				for i, strength in enumerate(face.emotions):
 					self.atomo.perceived_emotion(face.face_id,
-												 EMOTION[i],
+												 EMOTIONS[i],
 												 strength)

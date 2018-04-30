@@ -50,13 +50,11 @@ class AtomicMsgs:
 	# Face postions in the space-server
 	def perceived_face(self, faceid, xx, yy, zz):
 		face = '(perceived-face '+ str(faceid)+' '+ str(xx)+' '+' '+ str(yy)+' '+ str(zz)+')' + "\n"
-		print("Sending message %s " % face)
 		netcat(self.hostname, self.port, face)
 
 	def perceived_emotion(self, faceid, emotiontype, strength):
 		#(perceived-face-happy "UUID" happy 0.4)
 		face = '(perceived-emotion '+ str(faceid)+' '+ str(emotiontype)+' '+ str(strength)+')' + "\n"
-		print("Sending message %s " % face)
 		netcat(self.hostname, self.port, face)
 
 
