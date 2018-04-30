@@ -19,11 +19,12 @@
 
 import rospy
 from atomic_msgs import AtomicMsgs
-from ros_googlespeech.msg import Utterance
+from hr_msgs.msg import ChatMessage
+from std_msgs.msg import String
 
 '''
 Subscribes to topics published by
-    https://github.com/elggem/ros_googlespeech
+    https://github.com/hansonrobotics/asr/blob/master/scripts/google_speech.py
 and forwards them to OpenCog as per
     https://github.com/opencog/opencog/tree/master/opencog/ghost
 '''
@@ -32,11 +33,12 @@ class GoogleSpeech:
 
 	def __init__(self):
 		self.atomo = AtomicMsgs()
-		rospy.Subscriber("/stt/words", Utterance, self.perceived_word)
-		rospy.Subscriber("/stt/sentences", Utterance, self.perceived_sentence)
+        robot_name = rospy.get_param("robot_name")
+		rospy.Subscriber(robot_name+"/words", String, self.perceived_word)
+		rospy.Subscriber(robot_name+"/speech", String, self.perceived_sentence)
 
 	def perceived_word(self, msg):
-		self.atomo.perceived_sentence(msg.data)
+		self.atomo.perceived_sentence(msg.utterance)
 
 	def perceived_sentence(self, msg):
-		self.atomo.perceived_sentence(msg.data)
+		self.atomo.perceived_sentence(msg.utterance)

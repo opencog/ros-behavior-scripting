@@ -27,18 +27,6 @@ sys.path.append("/opt/hansonrobotics/ros/lib/python2.7/dist-packages/")
 import logging
 import rospy
 
-#from affect import Affect
-#from audio_power import AudioPower
-#from chat_track import ChatTrack
-#from control import Control
-#from control_psi import ControlPsi
-#from face_recog import FaceRecog
-#from face_track import FaceTrack
-#from sound_track import SoundTrack
-#from room_brightness import RoomBrightness
-#from saliency_track import SaliencyTrack
-#from tts_feedback import TTSFeedback
-
 from rosbridge_googlespeech import GoogleSpeech
 from rosbridge_peoplemodel import PeopleModel
 

@@ -39,9 +39,16 @@ start_opencog_tmux_session()
     python main.py ;
     $SHELL"
 
-  # Start the cogserver
+  # Start perception of emotions
+  # TODO: To be integrated into HEAD in v02
+  tmux new-window -t "$_session_name:" -n "perception" \
+    "roslaunch ros_peoplemodel devhead.launch ;
+    $SHELL"
+
+  # Start a shell to cogserver
   tmux new-window -t "$_session_name:" -n "cogserver-shell" \
-    "rlwrap telnet localhost 17001;
+    "while ! nc -z localhost 17001; do sleep 0.1; done
+    rlwrap telnet localhost 17001;
     $SHELL"
 
   echo "Finished starting opencog services in a new background tmux session"

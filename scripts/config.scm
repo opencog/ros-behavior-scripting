@@ -7,8 +7,11 @@
              (opencog attention)
              (opencog eva-behavior)
              (opencog ghost)
-             (opencog ghost predicates)
              (opencog ghost procedures))
+
+(ecan-based-ghost-rules #t)
+(set-relex-server-host)
+(ghost-run)
 
 
 ; (define (single-rule)
