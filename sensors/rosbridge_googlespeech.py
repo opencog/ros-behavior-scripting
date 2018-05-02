@@ -37,7 +37,7 @@ class GoogleSpeech:
 		rospy.Subscriber(robot_name+"/speech", ChatMessage, self.perceived_sentence)
 
 	def perceived_word(self, msg):
-		self.atomo.perceived_sentence(msg.utterance)
+		self.atomo.perceived_word(msg.utterance)
 
 	def perceived_sentence(self, msg):
 		self.atomo.perceived_sentence(msg.utterance)
