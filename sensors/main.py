@@ -28,7 +28,7 @@ import logging
 import rospy
 
 from rosbridge_googlespeech import GoogleSpeech
-from rosbridge_peoplemodel import PeopleModel
+from rosbridge_people_model import PeopleModel
 
 rospy.init_node("OpenCog_ROS_bridge")
 logging.info("Starting the OpenCog ROS Bridge")

@@ -31,6 +31,7 @@ find_package(catkin REQUIRED COMPONENTS
   hr_msgs
   rospy
   std_msgs
+  ros_people_model
 )
 
 # ===================================================================
