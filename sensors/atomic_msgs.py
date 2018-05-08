@@ -37,6 +37,7 @@ class AtomicMsgs:
 
 	# --------------------------------------------------------
 	# Wholeshow control -- Start and stop openpsi
+	# XXX Not functional
 	def wholeshow_stop(self):
 		netcat(self.hostname, self.port, "(disable-all-demos)")
 		netcat(self.hostname, self.port, "(halt)")
@@ -45,116 +46,28 @@ class AtomicMsgs:
 		netcat(self.hostname, self.port, "(enable-all-demos)")
 		netcat(self.hostname, self.port, '(run)')
 
-	# --------------------------------------------------------
-	# Set the facetracking state in atomspace
-	def update_ft_state_to_atomspace(self, enabled):
-		if enabled:
-			state = 'on'
-		else:
-			state = 'off'
-		face = '(StateLink face-tracking-state face-tracking-%s)\n' % state
-		netcat(self.hostname, self.port, face)
-
-	# --------------------------------------------------------
-	# Face-tracking stuff
-
-	# Add a newly visible face to the atomspace.
-	def add_face_to_atomspace(self, faceid):
-		face = "(EvaluationLink (PredicateNode \"visible face\") " + \
-		       "(ListLink (NumberNode \"" + str(faceid) + "\")))\n"
-		netcat(self.hostname, self.port, face)
-		print "New visible face in atomspace: ", faceid
-
-	# Focus attention on specific face.
-	# Build string to force attention to focus on the requested face.
-	# This bypasses the normal "new face is visible" sequence, and
-	# immediately shifts Eva's attention to this face.
-	def add_tracked_face_to_atomspace(self, faceid):
-		face = '(StateLink request-eye-contact-state (NumberNode "' + \
-		       str(faceid) + '"))\n'
-		netcat(self.hostname, self.port, face)
-		print "Force focus of attention on face: ", faceid
-
-	# Remove a face (make it no longer visible).
-	def remove_face_from_atomspace(self, faceid):
-
-		# AtomSpace cog-delete takes handle as an argument.
-		msg = self.delete_face(faceid)
-		netcat(self.hostname, self.port, msg)
-		print "Removed face from atomspace: ", faceid
-
-	# Build string to delete the face, and also to garbage-collect
-	# the ListLink and NumberNode.  In the long run, explicit deletes
-	# should not be needed, because the attention-allocation code
-	# should do this.  However, attention-alloc does not yet work.
-	def delete_face(self, faceid):
-
-		# Delete the association between the recognized and tracked face.
-		pattern = "(EvaluationLink (Predicate \"name\") " + \
-			"(ListLink (ConceptNode \"" + str(faceid) + "\") " + \
-			"(VariableNode \"reco-id\")))"
-
-		# XXX FIXME -- need to also delete the ListLink above.
-		del_reco = "(cog-execute! (PutLink (DeleteLink " + pattern + \
-				") (GetLink " + pattern + ")))\n"
-		face = del_reco + \
-				"(cog-delete " + \
-				"  (EvaluationLink (PredicateNode \"visible face\") " + \
-				"    (ListLink (NumberNode \"" + str(faceid) + "\"))))\n" + \
-				"(cog-delete " + \
-				"  (ListLink (NumberNode \"" + str(faceid) + "\")))\n" + \
-				"(cog-delete (NumberNode \"" + str(faceid) + "\"))\n"
-		return face
-
-	def create_face_octomap(self):
-		ldcmd = '(use-modules (opencog pointmem))'
-		cmd = '(cog-pointmem-create-map (ConceptNode "'+self.OCTOMAP_NAME+'") \
-               (ListLink (NumberNode "'+ self.SPATIAL_RESOLUTION+'") \
-                         (NumberNode "'+ self.TIME_RESOLUTION+'") \
-                         (NumberNode "'+ self.TIME_UNITS+'")))'
-		cmd = ldcmd + "\n" + cmd + "\n"
-		print("Sending message %s " % cmd)
-		netcat(self.hostname, self.port, cmd)
 
 	# Face postions in the space-server
-	def update_face_octomap(self, faceid, xx, yy, zz):
-		face = '(cog-pointmem-map-atom (ConceptNode "'+self.OCTOMAP_NAME+'") \
-               (NumberNode "'+ str(faceid)+'" (av 5 0 0)) \
-               (ListLink (NumberNode "'+ str(xx)+'") \
-                         (NumberNode "'+ str(yy)+'") \
-                         (NumberNode "'+ str(zz)+'")))'
-		face = face + "\n"
-		print("Sending message %s " % face)
+	def perceived_face(self, faceid, xx, yy, zz):
+		face = '(perceived-face '+ str(faceid)+' '+ str(xx)+' '+' '+ str(yy)+' '+ str(zz)+')' + "\n"
 		netcat(self.hostname, self.port, face)
 
-	# --------------------------------------------------------
+	def perceived_emotion(self, faceid, emotiontype, strength):
+		#(perceived-face-happy "UUID" happy 0.4)
+		face = '(perceived-emotion '+ str(faceid)+' '+ str(emotiontype)+' '+ str(strength)+')' + "\n"
+		netcat(self.hostname, self.port, face)
 
-	def face_recognition(self, tracker_id, name):
-		'''
-		Associate a face-recognition ID with a face-tracker ID.
-
-		`tracker_id` is the ID that the 3D face-location tracker is using.
-		Currently, the tracker-ID is an integer, stored as a NumberNode
-		in the atomspace.
-
-		`rec_id` is "0" for an unrecognized face and some other string
-		for a recognized face. It is currently stored as a ConceptNode.
-		'''
-		fc = '(make-recognized-face ' + str(tracker_id) + ' "' + name + '")\n'
-		netcat(self.hostname, self.port, fc)
 
 	# --------------------------------------------------------
 	# Speech-to-text stuff
-	def who_said(self, stt):
-		spoke = "(who-said? \"" + stt + "\")\n"
+	def perceived_sentence(self, stt):
+		spoke = "(ghost \"" + stt + "\")\n"
 		netcat(self.hostname, self.port, spoke)
 
-	# Pass the text that STT heard into opencog.
-	# Rather than setting state, we're going to trigger a script, here.
-	def perceived_text(self, text):
-		netcat(self.hostname, self.port,
-			'(cog-evaluate! (PutLink (DefinedPredicate "heard text")' +
-			' (SentenceNode "' + text + '")))')
+	def perceived_word(self, stt):
+		spoke = "(perceived-word \"" + stt + "\")\n"
+		netcat(self.hostname, self.port, spoke)
+
 
 	# Affect in speech
 	# Indicate that the robot heard freindly speech

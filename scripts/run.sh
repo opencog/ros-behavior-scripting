@@ -1,11 +1,14 @@
 #! /bin/bash
 #
 # Script for running opencog with HEAD.
+#
+#
 
 set -e
 _session_name="opencog"
 
 source /opt/hansonrobotics/ros/setup.bash
+source ~/hansonrobotics/HEAD/devel/setup.bash
 
 # hrtool workspace
 HR_WS="$(hr env | grep HR_WORKSPACE | cut -d = -f 2)"
@@ -14,14 +17,7 @@ HR_WS="$(hr env | grep HR_WORKSPACE | cut -d = -f 2)"
 # the PYTHONPATH
 PYTHON_PATH="${PYTHONPATH}:/usr/local/lib/python2.7/dist-packages"
 
-# Run a robot/simulation.
-if [ $# -eq 0 ]; then
-  echo "Pass at the robot name, which would be passed on to 'hr run --dev'"
-  exit 1
-fi
-
-# NOTE: Since the HEAD services may fail randomly, start opencog
-# in separate tmux session.
+# start opencog processes in tmux session.
 start_opencog_tmux_session()
 {
   echo "Start opencog services in a new background tmux session"
@@ -32,7 +28,7 @@ start_opencog_tmux_session()
     $SHELL"
 
   # Start the cogserver
-  tmux new-window -t "$_session_name:" -n "ghost" \
+  tmux new-window -t "$_session_name:" -n "cogserver" \
     "cd $HR_WS/OpenCog/ros-behavior-scripting/scripts &&
     guile -l config.scm;
     $SHELL"
@@ -44,12 +40,22 @@ start_opencog_tmux_session()
     python main.py ;
     $SHELL"
 
+  # Start perception of emotions
+  # TODO: To be integrated into HEAD in v02
+  tmux new-window -t "$_session_name:" -n "perception" \
+    "roslaunch ros_people_model devhead.launch ;
+    $SHELL"
+
+  # Start a shell to cogserver
+  tmux new-window -t "$_session_name:" -n "cogserver-shell" \
+    "while ! nc -z localhost 17001; do sleep 0.1; done
+    rlwrap telnet localhost 17001;
+    $SHELL"
+
   echo "Finished starting opencog services in a new background tmux session"
 }
 
 # Start opencog tmux session
 tmux has-session -t "$_session_name" || start_opencog_tmux_session
 
-# Start HEAD tmux session
-tmux has-session -t "$1" || hr run --dev $1
-
+tmux a -t "$_session_name"

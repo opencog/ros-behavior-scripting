@@ -18,29 +18,26 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 import rospy
-from hr_msgs.msg import ChatMessage
 from atomic_msgs import AtomicMsgs
+from hr_msgs.msg import ChatMessage
 
 '''
-Subscribe to text ROS messages, typically from the speech-to-text
-subsystem, and pass these onwards into the cogserver.
-
-Unit test by saying
-    rostopic pub --once chatbot_speech std_msgs/String "Hello Sopha!"
+Subscribes to topics published by
+    https://github.com/hansonrobotics/asr/blob/master/scripts/google_speech.py
+and forwards them to OpenCog as per
+    https://github.com/opencog/opencog/tree/master/opencog/ghost
 '''
 
-class ChatTrack:
+class GoogleSpeech:
 
 	def __init__(self):
 		self.atomo = AtomicMsgs()
-		rospy.Subscriber("chatbot_speech", ChatMessage,
-			self.chat_perceived_text_cb)
+		robot_name = rospy.get_param("robot_name")
+		rospy.Subscriber(robot_name+"/words", ChatMessage, self.perceived_word)
+		rospy.Subscriber(robot_name+"/speech", ChatMessage, self.perceived_sentence)
 
-	# ---------------------------------------------------------------
-	# Speech-to-text callback
-	def chat_perceived_text_cb(self, msg):
-		if msg.confidence >= 50:
-			# XXX FIXME WTF Why are there two of these????
-			# Surely one of these is enough to do the trick!
-			self.atomo.who_said(msg.utterance)
-			self.atomo.perceived_text(msg.utterance)
+	def perceived_word(self, msg):
+		self.atomo.perceived_word(msg.utterance)
+
+	def perceived_sentence(self, msg):
+		self.atomo.perceived_sentence(msg.utterance)

@@ -19,24 +19,44 @@
 
 import rospy
 from atomic_msgs import AtomicMsgs
+from ros_people_model.msg import Face
+from ros_people_model.msg import Faces
 
-from hr_msgs.msg import f_id
-from hr_msgs.msg import faces_ids
+'''
+Subscribes to topics published by
+    https://github.com/elggem/ros_people_model
+and forwards them to OpenCog as per
+    https://github.com/opencog/opencog/tree/master/opencog/ghost
+'''
+
+EMOTIONS = {
+    0 : "anger",
+    1 : "disgust",
+    2 : "fear",
+    3 : "happy",
+    4 : "sad",
+    5 : "surprise",
+    6 : "neutral"
+}
 
 # Push information about recognized faces into the atomspace.
-#
-# This listens to the `/camera/face_recognition` ROS topic. Note that
-# some ofther face-id subsystem generates face-recognition messages
-# to the `/camera/face_locations` topic, using a different message
-# format. (See the `face_track.py` file).  I am not sure what subsystem
-# publishes where, or why. XXX FIXME Figure out why tehre are two
-# different face-recognition subsystems in use, document them, and
-# standardize on the message formats used.
-class FaceRecog:
+class PeopleModel:
 	def __init__(self):
 		self.atomo = AtomicMsgs()
-		rospy.Subscriber('/camera/face_recognition', faces_ids, self.face_cb)
+		rospy.Subscriber('/faces', Faces, self.faces_cb)
 
-	def face_cb(self, data):
-		for fc in data.faces:
-			self.atomo.face_recognition(fc.id, fc.name);
+	def faces_cb(self, data):
+		for face in data.faces:
+			if face.face_id is "":
+				continue
+
+			self.atomo.perceived_face(face.face_id,
+									  face.position.x,
+									  face.position.y,
+									  face.position.z);
+
+			if len(face.emotions)>0:
+				for i, strength in enumerate(face.emotions):
+					self.atomo.perceived_emotion(face.face_id,
+												 EMOTIONS[i],
+												 strength)
