@@ -25,7 +25,7 @@ import rospy
 logger = logging.getLogger('hr.OpenPsi')
 
 
-class PsiControl():
+class PsiControl:
 
     def update_opencog_control_parameter(self, name, value):
         """

@@ -62,7 +62,7 @@ logger = logging.getLogger('hr.OpenCog_Eva')
 # `/behavior_control`, which is used to enable/disable the publication
 #      of classes of expression/gesture messages.
 #
-class EvaControl():
+class EvaControl:
     # Control bitflags. Bit-wise anded with control_mode. If the bit
     # is set, then the corresponding ROS message is emitted, else it
     # is not.
