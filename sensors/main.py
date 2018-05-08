@@ -32,7 +32,7 @@ from rosbridge_people_model import PeopleModel
 
 rospy.init_node("OpenCog_ROS_bridge")
 logging.info("Starting the OpenCog ROS Bridge")
-print "Starting the OpenCog ROS Bridge"
+print("Starting the OpenCog ROS Bridge")
 
 googlespeech = GoogleSpeech()
 peoplemodel = PeopleModel()
@@ -42,4 +42,4 @@ try:
 except rospy.ROSInterruptException as e:
 	print(e)
 
-print "Exit OpenCog ROS bridge"
+print("Exit OpenCog ROS bridge")

@@ -76,7 +76,7 @@ class EvaControl():
 	C_FACE = 32
 
 	def step(self):
-		print "step once"
+		print("step once")
 		return not rospy.is_shutdown()
     # Temporary disable sleeping.
 	def go_sleep(self):
@@ -104,7 +104,7 @@ class EvaControl():
 		exp.duration.secs = int(duration)
 		exp.duration.nsecs = 1000000000 * (duration - int(duration))
 		self.expression_pub.publish(exp)
-		print "Publish facial expression:", exp.name
+		print("Publish facial expression:", exp.name)
 
 	# Wrapper for Soma state expressions
 	def soma_state(self, name, intensity, rate, ease_in=0.0):
@@ -118,7 +118,7 @@ class EvaControl():
 		soma.ease_in.secs = int(ease_in)
 		soma.ease_in.nsecs = 1000000000 * (ease_in - int(ease_in))
 		self.soma_pub.publish(soma)
-		print "Publish soma state:", soma.name, "intensity:", intensity
+		print("Publish soma state:", soma.name, "intensity:", intensity)
 
 	# Wrapper for gestures
 	def gesture(self, name, intensity, repeat, speed):
@@ -131,7 +131,7 @@ class EvaControl():
 		ges.repeat = repeat
 		ges.speed = speed
 		self.gesture_pub.publish(ges)
-		print "Published gesture: ", ges.name
+		print("Published gesture: ", ges.name)
 
 	# ----------------------------------------------------------
 	# Look at, gaze at, glance at face id's
@@ -141,17 +141,17 @@ class EvaControl():
 
 	def look_at(self, face_id):
 		# Can get called 10x/second, don't print.
-		# print "----- Looking at face: " + str(face_id)
+		# print("----- Looking at face: " + str(face_id)
 		if not self.control_mode & self.C_EYES:
 			return
 		self.look_at_pub.publish(face_id)
 
 	def gaze_at(self, face_id):
-		print "----- Gazing at face: " + str(face_id)
+		print("----- Gazing at face: " + str(face_id))
 		self.gaze_at_pub.publish(face_id)
 
 	def glance_at(self, face_id):
-		print "----- Glancing at face: " + str(face_id)
+		print("----- Glancing at face: " + str(face_id))
 		self.glance_at_pub.publish(face_id)
 
 	# ----------------------------------------------------------
@@ -166,7 +166,7 @@ class EvaControl():
 		trg.x = xyz[0]
 		trg.y = xyz[1]
 		trg.z = xyz[2]
-		# print "gaze at point: ", trg.x, trg.y, trg.z
+		# print("gaze at point: ", trg.x, trg.y, trg.z
 		self.gaze_pub.publish(trg)
 
 	# Turn head towards the given target point.
@@ -178,7 +178,7 @@ class EvaControl():
 		trg.x = xyz[0]
 		trg.y = xyz[1]
 		trg.z = xyz[2]
-		# print "look at point: ", trg.x, trg.y, trg.z
+		# print("look at point: ", trg.x, trg.y, trg.z
 		self.turn_pub.publish(trg)
 
 	# ----------------------------------------------------------
@@ -188,7 +188,7 @@ class EvaControl():
 	# XXX FIXME ... remove this?? Kino wanted this for his stuff,
 	# but I don't think it's used anywhere.
 	def publish_behavior(self, event):
-		print "----- Behavior pub: " + event
+		print("----- Behavior pub: " + event)
 		self.behavior_pub.publish(event)
 
 	# ----------------------------------------------------------

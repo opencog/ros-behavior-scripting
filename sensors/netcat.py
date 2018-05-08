@@ -32,7 +32,7 @@ def netcat(hostname, port, content) :
 	try:
 		s.connect((hostname, port))
 	except socket.error as msg:
-		print "Connect failed: ", msg
+		print("Connect failed: ", msg)
 		s.close()
 		return 1  # non-zero means failure
 
@@ -44,7 +44,7 @@ def netcat(hostname, port, content) :
 		data = s.recv(1024)
 		if not data or data == "":
 			break
-		# print "Received:", repr(data)
-	# print "Connection closed."
+		# print("Received:", repr(data)
+	# print("Connection closed."
 	s.close()
 	return 0  # zero means success
