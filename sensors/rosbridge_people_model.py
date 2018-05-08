@@ -19,12 +19,12 @@
 
 import rospy
 from atomic_msgs import AtomicMsgs
-from ros_peoplemodel.msg import Face
-from ros_peoplemodel.msg import Faces
+from ros_people_model.msg import Face
+from ros_people_model.msg import Faces
 
 '''
 Subscribes to topics published by
-    https://github.com/elggem/ros_peoplemodel
+    https://github.com/elggem/ros_people_model
 and forwards them to OpenCog as per
     https://github.com/opencog/opencog/tree/master/opencog/ghost
 '''

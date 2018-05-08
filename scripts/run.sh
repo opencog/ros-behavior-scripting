@@ -43,7 +43,7 @@ start_opencog_tmux_session()
   # Start perception of emotions
   # TODO: To be integrated into HEAD in v02
   tmux new-window -t "$_session_name:" -n "perception" \
-    "roslaunch ros_peoplemodel devhead.launch ;
+    "roslaunch ros_people_model devhead.launch ;
     $SHELL"
 
   # Start a shell to cogserver
