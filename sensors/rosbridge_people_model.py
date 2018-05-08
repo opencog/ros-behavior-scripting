@@ -19,7 +19,6 @@
 
 import rospy
 from atomic_msgs import AtomicMsgs
-from ros_people_model.msg import Face
 from ros_people_model.msg import Faces
 
 '''
@@ -30,33 +29,34 @@ and forwards them to OpenCog as per
 '''
 
 EMOTIONS = {
-    0 : "anger",
-    1 : "disgust",
-    2 : "fear",
-    3 : "happy",
-    4 : "sad",
-    5 : "surprise",
-    6 : "neutral"
+    0: "anger",
+    1: "disgust",
+    2: "fear",
+    3: "happy",
+    4: "sad",
+    5: "surprise",
+    6: "neutral"
 }
+
 
 # Push information about recognized faces into the atomspace.
 class PeopleModel:
-	def __init__(self):
-		self.atomo = AtomicMsgs()
-		rospy.Subscriber('/faces', Faces, self.faces_cb)
+    def __init__(self):
+        self.atomo = AtomicMsgs()
+        rospy.Subscriber('/faces', Faces, self.faces_cb)
 
-	def faces_cb(self, data):
-		for face in data.faces:
-			if face.face_id is "":
-				continue
+    def faces_cb(self, data):
+        for face in data.faces:
+            if face.face_id is "":
+                continue
 
-			self.atomo.perceived_face(face.face_id,
-									  face.position.x,
-									  face.position.y,
-									  face.position.z);
+            self.atomo.perceived_face(face.face_id,
+                                      face.position.x,
+                                      face.position.y,
+                                      face.position.z)
 
-			if len(face.emotions)>0:
-				for i, strength in enumerate(face.emotions):
-					self.atomo.perceived_emotion(face.face_id,
-												 EMOTIONS[i],
-												 strength)
+            if len(face.emotions) > 0:
+                for i, strength in enumerate(face.emotions):
+                    self.atomo.perceived_emotion(face.face_id,
+                                                 EMOTIONS[i],
+                                                 strength)

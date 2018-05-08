@@ -28,16 +28,17 @@ and forwards them to OpenCog as per
     https://github.com/opencog/opencog/tree/master/opencog/ghost
 '''
 
+
 class GoogleSpeech:
 
-	def __init__(self):
-		self.atomo = AtomicMsgs()
-		robot_name = rospy.get_param("robot_name")
-		rospy.Subscriber(robot_name+"/words", ChatMessage, self.perceived_word)
-		rospy.Subscriber(robot_name+"/speech", ChatMessage, self.perceived_sentence)
+    def __init__(self):
+        self.atomo = AtomicMsgs()
+        robot_name = rospy.get_param("robot_name")
+        rospy.Subscriber(robot_name + "/words", ChatMessage, self.perceived_word)
+        rospy.Subscriber(robot_name + "/speech", ChatMessage, self.perceived_sentence)
 
-	def perceived_word(self, msg):
-		self.atomo.perceived_word(msg.utterance)
+    def perceived_word(self, msg):
+        self.atomo.perceived_word(msg.utterance)
 
-	def perceived_sentence(self, msg):
-		self.atomo.perceived_sentence(msg.utterance)
+    def perceived_sentence(self, msg):
+        self.atomo.perceived_sentence(msg.utterance)

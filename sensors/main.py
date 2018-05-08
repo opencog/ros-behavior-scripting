@@ -22,6 +22,7 @@
 # XXX To be removed when https://github.com/hansonrobotics/HEAD/issues/618
 # is resolved nicely
 import sys
+
 sys.path.append("/opt/hansonrobotics/ros/lib/python2.7/dist-packages/")
 
 import logging
@@ -38,8 +39,8 @@ googlespeech = GoogleSpeech()
 peoplemodel = PeopleModel()
 
 try:
-	rospy.spin()
+    rospy.spin()
 except rospy.ROSInterruptException as e:
-	print(e)
+    print(e)
 
 print("Exit OpenCog ROS bridge")
