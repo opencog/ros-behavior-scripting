@@ -18,11 +18,12 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from psi_ctrl import PsiControl
 from opencog.atomspace import TruthValue
+from psi_ctrl import PsiControl
 
 # The ROS layer.
 psi = PsiControl()
+
 
 # Global functions, because that's what PythonEval expects.
 # Would be great if PythonEval was fixed to work smarter, not harder.
@@ -31,15 +32,16 @@ psi = PsiControl()
 
 # Update dynamic paramater cache
 def update_opencog_control_parameter(name_node, value_node):
-	try:
-		name = name_node.name
-		value = float(value_node.name)
-		psi.update_opencog_control_parameter(name, value)
-		return TruthValue(1, 1)
-	except:
-		return TruthValue(0, 1)
+    try:
+        name = name_node.name
+        value = float(value_node.name)
+        psi.update_opencog_control_parameter(name, value)
+        return TruthValue(1, 1)
+    except:
+        return TruthValue(0, 1)
+
 
 # Update dynamic parameters
 def push_parameter_update():
-	psi.push_parameter_update()
-	return TruthValue(1, 1)
+    psi.push_parameter_update()
+    return TruthValue(1, 1)

@@ -20,31 +20,32 @@
 
 import socket
 
+
 # This implements netcat in python.
 #
 # If you don't now what netcat is, then you should google it.
 # Its important and not complicated.
 #
-def netcat(hostname, port, content) :
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def netcat(hostname, port, content):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	# If the cogserver is down, the connection will fail.
-	try:
-		s.connect((hostname, port))
-	except socket.error as msg:
-		print "Connect failed: ", msg
-		s.close()
-		return 1  # non-zero means failure
+    # If the cogserver is down, the connection will fail.
+    try:
+        s.connect((hostname, port))
+    except socket.error as msg:
+        print("Connect failed: ", msg)
+        s.close()
+        return 1  # non-zero means failure
 
-	print("netcat sending: %s" % content)
+    print("netcat sending: %s" % content)
 
-	s.sendall(content)
-	s.shutdown(socket.SHUT_WR)
-	while True:
-		data = s.recv(1024)
-		if not data or data == "":
-			break
-		# print "Received:", repr(data)
-	# print "Connection closed."
-	s.close()
-	return 0  # zero means success
+    s.sendall(content)
+    s.shutdown(socket.SHUT_WR)
+    while True:
+        data = s.recv(1024)
+        if not data or data == "":
+            break
+    # print("Received:", repr(data)
+    # print("Connection closed."
+    s.close()
+    return 0  # zero means success

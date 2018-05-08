@@ -28,6 +28,7 @@
 # XXX To be removed when https://github.com/hansonrobotics/HEAD/issues/618
 # is resolved nicely
 import sys
+
 sys.path.append("/opt/hansonrobotics/ros/lib/python2.7/dist-packages/")
 
 import rospy
@@ -37,104 +38,120 @@ from opencog.atomspace import TruthValue
 # The ROS layer.
 evl = EvaControl()
 
+
 # Global functions, because that's what PythonEval expects.
 # Would be great if PythonEval was fixed to work smarter, not harder.
 #
 # Must return TruthValue, since EvaluationLinks expect TruthValues.
 
 def do_wake_up():
-	evl.wake_up()
-	return TruthValue(1, 1)
+    evl.wake_up()
+    return TruthValue(1, 1)
+
 
 def do_go_sleep():
-	evl.go_sleep()
-	return TruthValue(1, 1)
+    evl.go_sleep()
+    return TruthValue(1, 1)
+
 
 def glance_at_face(face_id_node):
-	face_id = int(float(face_id_node.name))
-	print "Python glance at face id", face_id
-	evl.glance_at(face_id)
-	return TruthValue(1, 1)
+    face_id = int(float(face_id_node.name))
+    print("Python glance at face id", face_id)
+    evl.glance_at(face_id)
+    return TruthValue(1, 1)
+
 
 def look_at_face(face_id_node):
-	face_id = int(float(face_id_node.name))
-	print "Python look at face id", face_id
-	evl.look_at(face_id)
-	return TruthValue(1, 1)
+    face_id = int(float(face_id_node.name))
+    print("Python look at face id", face_id)
+    evl.look_at(face_id)
+    return TruthValue(1, 1)
+
 
 def gaze_at_face(face_id_node):
-	face_id = int(float(face_id_node.name))
-	print "Python gaze at face id", face_id
-	evl.gaze_at(face_id)
-	return TruthValue(1, 1)
+    face_id = int(float(face_id_node.name))
+    print("Python gaze at face id", face_id)
+    evl.gaze_at(face_id)
+    return TruthValue(1, 1)
+
 
 def gaze_at_point(x_node, y_node, z_node):
-	x = float(x_node.name)
-	y = float(y_node.name)
-	z = float(z_node.name)
-	evl.gaze_at_point(x, y, z)
-	return TruthValue(1, 1)
+    x = float(x_node.name)
+    y = float(y_node.name)
+    z = float(z_node.name)
+    evl.gaze_at_point(x, y, z)
+    return TruthValue(1, 1)
+
 
 def look_at_point(x_node, y_node, z_node):
-	x = float(x_node.name)
-	y = float(y_node.name)
-	z = float(z_node.name)
-	evl.look_at_point(x, y, z)
-	return TruthValue(1, 1)
+    x = float(x_node.name)
+    y = float(y_node.name)
+    z = float(z_node.name)
+    evl.look_at_point(x, y, z)
+    return TruthValue(1, 1)
+
 
 def do_face_expression(face_expression_node, duration_node, intensity_node):
-	face_expression = face_expression_node.name
-	intensity = float(intensity_node.name)
-	duration = float(duration_node.name)
-	print("Python facial expression: ", face_expression, " for ",
-		duration, " int ", intensity)
-	evl.expression(face_expression, intensity, duration)
-	return TruthValue(1, 1)
+    face_expression = face_expression_node.name
+    intensity = float(intensity_node.name)
+    duration = float(duration_node.name)
+    print("Python facial expression: ", face_expression, " for ",
+          duration, " int ", intensity)
+    evl.expression(face_expression, intensity, duration)
+    return TruthValue(1, 1)
+
 
 def do_gesture(gesture_node, intensity_node, repeat_node, speed_node):
-	gesture = gesture_node.name
-	intensity = float(intensity_node.name)
-	repeat = float(repeat_node.name)
-	speed = float(speed_node.name)
-	print("Python gesture: ", gesture, ", int: ", intensity,
-		", rep: ", repeat, ", speed: ", speed)
-	evl.gesture(gesture, intensity, repeat, speed)
-	return TruthValue(1, 1)
+    gesture = gesture_node.name
+    intensity = float(intensity_node.name)
+    repeat = float(repeat_node.name)
+    speed = float(speed_node.name)
+    print("Python gesture: ", gesture, ", int: ", intensity,
+          ", rep: ", repeat, ", speed: ", speed)
+    evl.gesture(gesture, intensity, repeat, speed)
+    return TruthValue(1, 1)
+
 
 def publish_behavior(event_node):
-	print ("(Behavior event:", event_node.name, ")")
-	evl.publish_behavior(event_node.name)
-	return TruthValue(1, 1)
+    print("(Behavior event:", event_node.name, ")")
+    evl.publish_behavior(event_node.name)
+    return TruthValue(1, 1)
+
 
 def explore_saccade():
-	print "Python: Explore Saccade"
-	evl.explore_saccade()
-	return TruthValue(1, 1)
+    print("Python: Explore Saccade")
+    evl.explore_saccade()
+    return TruthValue(1, 1)
+
 
 def conversational_saccade():
-	print "Python: Conversational Saccade"
-	evl.conversational_saccade()
-	return TruthValue(1, 1)
+    print("Python: Conversational Saccade")
+    evl.conversational_saccade()
+    return TruthValue(1, 1)
+
 
 def listening_saccade():
-	print "Python: Listening Saccade"
-	evl.listening_saccade()
-	return TruthValue(1, 1)
+    print("Python: Listening Saccade")
+    evl.listening_saccade()
+    return TruthValue(1, 1)
+
 
 def blink_rate(mean_node, var_node):
-	mean = float(mean_node.name)
-	var  = float(var_node.name)
-	print "Python: blink-rate: ", mean, " variation ", var
-	evl.blink_rate(mean, var)
-	return TruthValue(1, 1)
+    mean = float(mean_node.name)
+    var = float(var_node.name)
+    print("Python: blink-rate: ", mean, " variation ", var)
+    evl.blink_rate(mean, var)
+    return TruthValue(1, 1)
+
 
 def say_text(text_node):
-	text = text_node.name
-	evl.say_text(text)
-	return TruthValue(1, 1)
+    text = text_node.name
+    evl.say_text(text)
+    return TruthValue(1, 1)
+
 
 # Return true as long as ROS is running.
 def ros_is_running():
-	if (rospy.is_shutdown()):
-		return TruthValue(0, 1)
-	return TruthValue(1, 1)
+    if rospy.is_shutdown():
+        return TruthValue(0, 1)
+    return TruthValue(1, 1)
