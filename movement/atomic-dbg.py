@@ -97,7 +97,7 @@ def gaze_at_point(x_node, y_node, z_node):
     elif y > 0.1:
         print("(Eva looks to the left)")
 
-    elif -0.1 < y and y < 0.1 and -0.1 < z and z < 0.1:
+    elif -0.1 < y < 0.1 and -0.1 < z < 0.1:
         print("(Eva looks straight ahead)")
 
     if z < -0.1:
@@ -122,7 +122,7 @@ def look_at_point(x_node, y_node, z_node):
     elif y > 0.1:
         print("(Eva turns to the left)")
 
-    elif -0.1 < y and y < 0.1 and -0.1 < z and z < 0.1:
+    elif -0.1 < y < 0.1 and -0.1 < z < 0.1:
         print("(Eva turns straight ahead)")
 
     if z < -0.1:
